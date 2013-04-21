@@ -45,8 +45,8 @@ this.play = function(item) {
 	  			  self.musicPlayer.enableControls();
 	  				  			
 		  			  self.musicPlayer.bindCursorStop(function(value) {
-		  				loggerJamendo.debug("CURSOR SET POSITION");
-		  				  self.currentSoundObject.setPosition(value);
+		  			
+		  				  self.currentSoundObject.setPosition(value*1000);
 		  				});
 			 
 	  		  },
@@ -68,7 +68,7 @@ this.play = function(item) {
 	  		  whileloading: function(){
 	  			 loggerJamendo.debug("duration :"+this.duration);
 	  			  
-	  			  self.musicPlayer.cursor.slider("option","max",this.duration).progressbar('value',(this.bytesLoaded/this.bytesTotal)*100 );
+	  			  self.musicPlayer.cursor.slider("option","max",this.duration/1000).progressbar('value',(this.bytesLoaded/this.bytesTotal)*100 );
 
 	  		  },
 	  		  whileplaying: function(){
@@ -78,7 +78,7 @@ this.play = function(item) {
 	  				return;
 	  			}
 			  	if(self.musicPlayer.cursor.data('isdragging')==false){
-			  		self.musicPlayer.cursor.slider("value", this.position);
+			  		self.musicPlayer.cursor.slider("value", this.position/1000);
 			  	}
 	  			
 	  		  },
