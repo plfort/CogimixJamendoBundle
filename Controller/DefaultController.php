@@ -99,7 +99,7 @@ class DefaultController extends Controller
         $resultBuilder = $this->get('cogimix_jamendo.result_builder');
         $accessToken= $accessTokenManager->getUserAccessToken($this->getUser());
         if($accessToken!==null){
-            $tracks=$jamendoApi->getPlaylistTracks($accessToken,$id);
+            $tracks=$jamendoApi->getPlaylistTracks($id,$accessToken);
             if($tracks){
                 $response->setSuccess(true);
                 $response->addData('tracks', $resultBuilder->createArrayFromJamendoTracks($tracks));

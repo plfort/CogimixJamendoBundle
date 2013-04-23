@@ -113,10 +113,15 @@ class JamendoApi
         return false;
     }
 
-    public function getPlaylistTracks($accessToken, $playlistId)
+    public function getPlaylistTracks($playlistId,$accessToken=null)
     {
-        $parameters = sprintf('&access_token=%s&limit=%d&id=%s',
-                $accessToken->getAccessToken(), 100, $playlistId);
+        if($accessToken!==null){
+            $parameters = sprintf('&access_token=%s&limit=%d&id=%s',
+                    $accessToken->getAccessToken(), 100, $playlistId);
+        }else{
+            $parameters = sprintf('&limit=%d&id=%s', 100, $playlistId);
+        }
+
         $result = $this->callApi('playlists/', 'tracks/', $parameters);
         if ($result != false) {
             if (isset($result['headers']) && isset($result['headers']['code'])) {
