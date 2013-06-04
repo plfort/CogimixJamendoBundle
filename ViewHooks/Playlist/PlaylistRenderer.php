@@ -62,4 +62,8 @@ class PlaylistRenderer implements PlaylistRendererInterface,SecurityContextAware
 
         return null;
     }
+
+    public function getTag(){
+        return 'jamendo';
+    }
 }
