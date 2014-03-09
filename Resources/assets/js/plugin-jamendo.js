@@ -125,6 +125,21 @@ this.setVolume = function(value){
 $("body").on('musicplayerReady',function(event){
 	event.musicPlayer.addPlugin('jam',new jamendoPlayer(event.musicPlayer));
 });
+
+droppedHookArray['jam-playlist'] = function(droppedItem,callback){
+	var playlistId=droppedItem.data('id');
+	$.get(Routing.generate('_jamendo_playlist_songs',{'id':playlistId}),function(response){
+        if(response.success==true){
+            loggerJamendo.debug(response.data.tracks);
+            callback(response.data.tracks);
+            }
+        },'json');
+
+};
+
+iconMap['jam'] = 'bundles/cogimixjamendo/images/jamendo-icon.png';
+
+
 $(document).ready(function(){
 	$("#jamendo-menu").on('click','#loginJamendoBtn',function(event){
 		
@@ -160,7 +175,7 @@ $(document).ready(function(){
             	$("#wrap").animate({scrollTop:0});
 	
 			}else{
-				loggerGrooveshark.debug('Error with jamendo');
+				loggerJamendo.debug('Error with jamendo');
 			}
 		},'json');
 		return false;
@@ -174,27 +189,15 @@ $(document).ready(function(){
 				musicPlayer.addSongs(response.data.tracks);
                 musicPlayer.play();
 			}else{
-				loggerGrooveshark.debug('Error with jamendo');
+				loggerJamendo.debug('Error with jamendo');
 			}
 		},'json');
 		return false;
 	});
 
-	
-
-
     $(".jam-playlist-item").draggable(draggableOptionsPlaylistListItem);
 });
 
 
-droppedHookArray['jam-playlist'] = function(droppedItem,callback){
-		var playlistId=droppedItem.data('id');
-		$.get(Routing.generate('_jamendo_playlist_songs',{'id':playlistId}),function(response){
-            if(response.success==true){
-                loggerJamendo.debug(response.data.tracks);
-                callback(response.data.tracks);
-                }
-            },'json');
-	
-}
+
 
